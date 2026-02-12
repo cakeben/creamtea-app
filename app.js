@@ -79,12 +79,30 @@ function render(list) {
   });
 }
 
-async function geocodePostcode(postcode) {
-  const res = await fetch(`https://api.postcodes.io/postcodes/${encodeURIComponent(postcode)}`);
-  if (!res.ok) throw new Error('Postcode not found');
-  const payload = await res.json();
-  if (!payload?.result) throw new Error('Invalid postcode');
-  return { lat: payload.result.latitude, lon: payload.result.longitude };
+async function geocodeAddress(query) {
+  const trimmed = query.trim();
+
+  const postcodeLike = /^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$/i.test(trimmed);
+  if (postcodeLike) {
+    const pcRes = await fetch(`https://api.postcodes.io/postcodes/${encodeURIComponent(trimmed)}`);
+    if (pcRes.ok) {
+      const pcPayload = await pcRes.json();
+      if (pcPayload?.result) {
+        return { lat: pcPayload.result.latitude, lon: pcPayload.result.longitude, label: pcPayload.result.postcode };
+      }
+    }
+  }
+
+  const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=gb&q=${encodeURIComponent(trimmed)}`);
+  if (!geoRes.ok) throw new Error('Address not found');
+  const geoPayload = await geoRes.json();
+  if (!Array.isArray(geoPayload) || geoPayload.length === 0) throw new Error('Address not found');
+
+  return {
+    lat: Number(geoPayload[0].lat),
+    lon: Number(geoPayload[0].lon),
+    label: geoPayload[0].display_name
+  };
 }
 
 function computeView() {
@@ -138,19 +156,19 @@ function resetToTop20() {
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const postcode = postcodeInput.value.trim();
-  if (!postcode) return;
+  const query = postcodeInput.value.trim();
+  if (!query) return;
 
-  statusEl.textContent = 'Resolving postcode...';
+  statusEl.textContent = 'Resolving address...';
 
   try {
-    userLoc = await geocodePostcode(postcode);
+    userLoc = await geocodeAddress(query);
     if (userMarker) userMarker.remove();
-    userMarker = L.marker([userLoc.lat, userLoc.lon]).addTo(map).bindPopup('Your postcode').openPopup();
-    statusEl.textContent = `Showing top cream teas near ${postcode.toUpperCase()}.`;
+    userMarker = L.marker([userLoc.lat, userLoc.lon]).addTo(map).bindPopup('Your location').openPopup();
+    statusEl.textContent = `Showing top cream teas near ${userLoc.label || query}.`;
     computeView();
   } catch {
-    statusEl.textContent = `Could not find postcode: ${postcode.toUpperCase()}`;
+    statusEl.textContent = `Could not find location: ${query}`;
   }
 });
 
