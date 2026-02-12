@@ -13,5 +13,10 @@ export const creamTeaSpots = [
   { name: "The Hidden Lane Tearoom", town: "Glasgow", lat: 55.8685, lon: -4.3009, rating: 4.5, reviews: 680 },
   { name: "Patisserie Valerie", town: "Edinburgh", lat: 55.9532, lon: -3.1883, rating: 4.3, reviews: 940 },
   { name: "The Orchard Tea Garden", town: "Grantchester", lat: 52.1848, lon: 0.0863, rating: 4.5, reviews: 3050 },
-  { name: "The Old Forge Caffe", town: "Inverie", lat: 57.0334, lon: -5.6962, rating: 4.8, reviews: 370 }
+  { name: "The Old Forge Caffe", town: "Inverie", lat: 57.0334, lon: -5.6962, rating: 4.8, reviews: 370 },
+  { name: "Pump Room Restaurant", town: "Bath", lat: 51.3814, lon: -2.3596, rating: 4.4, reviews: 2590 },
+  { name: "Bird & Blend Tea Co.", town: "Brighton", lat: 50.8225, lon: -0.1372, rating: 4.7, reviews: 520 },
+  { name: "Fortnum & Mason Tea Salon", town: "London", lat: 51.5094, lon: -0.1365, rating: 4.5, reviews: 4380 },
+  { name: "The Willow Tea Rooms", town: "Glasgow", lat: 55.8669, lon: -4.2659, rating: 4.4, reviews: 2360 },
+  { name: "No. 1 Royal Crescent Tea Room", town: "Bath", lat: 51.3872, lon: -2.3674, rating: 4.6, reviews: 890 }
 ];
