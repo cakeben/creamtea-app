@@ -81,8 +81,8 @@ function render(list) {
 
 async function geocodeAddress(query) {
   const trimmed = query.trim();
-
   const postcodeLike = /^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$/i.test(trimmed);
+
   if (postcodeLike) {
     const pcRes = await fetch(`https://api.postcodes.io/postcodes/${encodeURIComponent(trimmed)}`);
     if (pcRes.ok) {
@@ -109,12 +109,20 @@ function computeView() {
   const radius = Number(radiusEl.value);
   radiusVal.textContent = String(radius);
 
-  let ranked = creamTeaSpots.map((s) => {
+  const allWithDistance = creamTeaSpots.map((s) => {
     const dist = userLoc ? distanceMiles(userLoc, s) : null;
     return { ...s, distanceMiles: dist, score: 0 };
   });
 
+  let ranked = allWithDistance;
   if (userLoc) ranked = ranked.filter((s) => s.distanceMiles <= radius);
+
+  if (userLoc && ranked.length === 0) {
+    ranked = [...allWithDistance]
+      .sort((a, b) => (a.distanceMiles ?? 999) - (b.distanceMiles ?? 999))
+      .slice(0, 20);
+    statusEl.textContent = `No results within ${radius} miles. Showing nearest cream tea spots instead.`;
+  }
 
   ranked = ranked.map((s) => ({ ...s, score: compositeScore(s) }));
 

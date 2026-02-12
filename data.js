@@ -18,5 +18,15 @@ export const creamTeaSpots = [
   { name: "Bird & Blend Tea Co.", town: "Brighton", lat: 50.8225, lon: -0.1372, rating: 4.7, reviews: 520, website: "https://www.birdandblendtea.com/" },
   { name: "Fortnum & Mason Tea Salon", town: "London", lat: 51.5094, lon: -0.1365, rating: 4.5, reviews: 4380, website: "https://www.fortnumandmason.com/" },
   { name: "The Willow Tea Rooms", town: "Glasgow", lat: 55.8669, lon: -4.2659, rating: 4.4, reviews: 2360, website: "https://www.willowtearoomstrust.org/" },
-  { name: "No. 1 Royal Crescent Tea Room", town: "Bath", lat: 51.3872, lon: -2.3674, rating: 4.6, reviews: 890, website: "https://no1royalcrescent.org.uk/" }
+  { name: "No. 1 Royal Crescent Tea Room", town: "Bath", lat: 51.3872, lon: -2.3674, rating: 4.6, reviews: 890, website: "https://no1royalcrescent.org.uk/" },
+  { name: "Tea on the Green", town: "Exeter", lat: 50.7184, lon: -3.5339, rating: 4.5, reviews: 540 },
+  { name: "Boringdon Hall Afternoon Tea", town: "Plymouth", lat: 50.3856, lon: -4.0300, rating: 4.7, reviews: 410, website: "https://www.boringdonhall.co.uk/" },
+  { name: "The Green Ginger Tea Rooms", town: "Totnes", lat: 50.4312, lon: -3.6890, rating: 4.6, reviews: 390 },
+  { name: "The Fig Tree @ 36", town: "Plymouth", lat: 50.3714, lon: -4.1427, rating: 4.6, reviews: 320 },
+  { name: "Angles Tea Rooms", town: "Bideford", lat: 51.0178, lon: -4.2080, rating: 4.5, reviews: 260 },
+  { name: "Aune Valley Deli Tea Room", town: "Kingsbridge", lat: 50.2836, lon: -3.7761, rating: 4.6, reviews: 210 },
+  { name: "Torrington Coffee House", town: "Great Torrington", lat: 50.9531, lon: -4.1440, rating: 4.4, reviews: 180 },
+  { name: "The Cornish Tea & Coffee Co", town: "Truro", lat: 50.2632, lon: -5.0510, rating: 4.5, reviews: 350 },
+  { name: "The Front Room", town: "Lynton", lat: 51.2294, lon: -3.8357, rating: 4.7, reviews: 170 },
+  { name: "Roly's Fudge Pantry Tea Room", town: "Tavistock", lat: 50.5481, lon: -4.1440, rating: 4.4, reviews: 140 }
 ];
