@@ -1,0 +1,85 @@
+:root {
+  --bg: #0f1220;
+  --panel: #171b2e;
+  --text: #edf0ff;
+  --muted: #aeb6df;
+  --accent: #ff5f8f;
+  --accent-2: #58d1c9;
+  --line: #2b3152;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: radial-gradient(1400px 800px at 20% -20%, #22284b 0%, var(--bg) 60%);
+  color: var(--text);
+}
+.hero { padding: 1.25rem 1rem 0.25rem; text-align: center; }
+.hero h1 { margin: 0; font-size: clamp(1.4rem, 2.6vw, 2.2rem); }
+.hero p { margin: .4rem 0 0; color: var(--muted); }
+.layout {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 340px minmax(320px, 1fr);
+  grid-template-areas:
+    "controls map"
+    "table table";
+  padding: 1rem;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.panel {
+  background: color-mix(in oklab, var(--panel) 90%, black 10%);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 1rem;
+}
+.controls { grid-area: controls; }
+.map-panel { grid-area: map; min-height: 420px; }
+.table-panel { grid-area: table; }
+#map { width: 100%; height: 100%; min-height: 420px; border-radius: 10px; }
+form { display: flex; gap: .5rem; margin-top: .5rem; }
+input, select, button {
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #10162b;
+  color: var(--text);
+  padding: .6rem .75rem;
+}
+input { flex: 1; }
+button {
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--accent), #ff7e7e);
+  border: none;
+  font-weight: 700;
+}
+button:hover { filter: brightness(1.08); }
+.muted { color: var(--muted); font-size: .9rem; }
+.filters { margin-top: .8rem; display: grid; gap: .7rem; }
+label { display: grid; gap: .4rem; font-size: .92rem; }
+.table-wrap { overflow: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td {
+  border-bottom: 1px solid var(--line);
+  padding: .55rem .45rem;
+  text-align: left;
+  white-space: nowrap;
+}
+th { color: var(--muted); font-weight: 600; }
+tr:hover td { background: #1f2646; }
+.badge {
+  display: inline-flex;
+  padding: .2rem .5rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--accent-2) 25%, #1e2644 75%);
+}
+footer { text-align: center; color: var(--muted); padding: .25rem 1rem 1rem; }
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "controls"
+      "map"
+      "table";
+  }
+}

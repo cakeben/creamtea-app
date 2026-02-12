@@ -1,0 +1,17 @@
+export const creamTeaSpots = [
+  { name: "Bettys Café Tea Rooms", town: "Harrogate", lat: 53.9921, lon: -1.5418, rating: 4.6, reviews: 14780 },
+  { name: "The Cornish Bakery", town: "St Ives", lat: 50.2129, lon: -5.4794, rating: 4.5, reviews: 2840 },
+  { name: "Tea & Tattle", town: "London", lat: 51.5183, lon: -0.1260, rating: 4.4, reviews: 1210 },
+  { name: "The Copper Kettle", town: "Cambridge", lat: 52.2055, lon: 0.1197, rating: 4.4, reviews: 2120 },
+  { name: "Sally Lunn’s Historic Eating House", town: "Bath", lat: 51.3811, lon: -2.3589, rating: 4.5, reviews: 5720 },
+  { name: "The Mad Hatter Oxford", town: "Oxford", lat: 51.7520, lon: -1.2577, rating: 4.3, reviews: 980 },
+  { name: "The Bay Tree Café", town: "Dorset", lat: 50.7164, lon: -2.4360, rating: 4.7, reviews: 640 },
+  { name: "The Tea Junction", town: "Bournemouth", lat: 50.7192, lon: -1.8808, rating: 4.5, reviews: 430 },
+  { name: "Café Boscanova", town: "Bournemouth", lat: 50.7314, lon: -1.8382, rating: 4.6, reviews: 1640 },
+  { name: "The Ivy House", town: "Tenby", lat: 51.6724, lon: -4.7041, rating: 4.4, reviews: 510 },
+  { name: "Munchkins Tea Room", town: "Canterbury", lat: 51.2795, lon: 1.0802, rating: 4.6, reviews: 770 },
+  { name: "The Hidden Lane Tearoom", town: "Glasgow", lat: 55.8685, lon: -4.3009, rating: 4.5, reviews: 680 },
+  { name: "Patisserie Valerie", town: "Edinburgh", lat: 55.9532, lon: -3.1883, rating: 4.3, reviews: 940 },
+  { name: "The Orchard Tea Garden", town: "Grantchester", lat: 52.1848, lon: 0.0863, rating: 4.5, reviews: 3050 },
+  { name: "The Old Forge Caffe", town: "Inverie", lat: 57.0334, lon: -5.6962, rating: 4.8, reviews: 370 }
+];
