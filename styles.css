@@ -83,3 +83,8 @@ footer { text-align: center; color: var(--muted); padding: .25rem 1rem 1rem; }
       "table";
   }
 }
+.actions-row { margin-top: .55rem; }
+.secondary { background:#202a4d; border:1px solid #3b4a82; }
+.secondary:hover { filter: brightness(1.15); }
+.table-wrap a { color:#9ad7ff; text-decoration:none; }
+.table-wrap a:hover { text-decoration:underline; }

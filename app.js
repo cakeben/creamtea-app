@@ -2,13 +2,17 @@ import { creamTeaSpots } from './data.js';
 
 const form = document.getElementById('search-form');
 const postcodeInput = document.getElementById('postcode');
+const resetBtn = document.getElementById('reset-btn');
 const statusEl = document.getElementById('status');
 const rowsEl = document.getElementById('rows');
 const radiusEl = document.getElementById('radius');
 const radiusVal = document.getElementById('radius-val');
 const sortEl = document.getElementById('sort');
 
-const map = L.map('map', { zoomControl: true }).setView([54.2, -2.8], 6);
+const defaultCenter = [54.2, -2.8];
+const defaultZoom = 6;
+
+const map = L.map('map', { zoomControl: true }).setView(defaultCenter, defaultZoom);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   maxZoom: 19,
   attribution: '&copy; OpenStreetMap contributors'
@@ -35,12 +39,25 @@ function compositeScore(item) {
   return Number((ratingWeight + reviewWeight - distPenalty).toFixed(2));
 }
 
+function directionsLink(s) {
+  if (userLoc) {
+    return `https://www.google.com/maps/dir/?api=1&origin=${userLoc.lat},${userLoc.lon}&destination=${s.lat},${s.lon}&travelmode=driving`;
+  }
+  return `https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lon}`;
+}
+
 function render(list) {
   rowsEl.innerHTML = '';
   spotMarkers.forEach((m) => m.remove());
   spotMarkers = [];
 
   list.forEach((s, idx) => {
+    const websiteHtml = s.website
+      ? `<a href="${s.website}" target="_blank" rel="noopener noreferrer">Website</a>`
+      : '';
+    const directionsHtml = `<a href="${directionsLink(s)}" target="_blank" rel="noopener noreferrer">Directions</a>`;
+    const linksHtml = websiteHtml ? `${websiteHtml} · ${directionsHtml}` : directionsHtml;
+
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${idx + 1}</td>
@@ -50,12 +67,14 @@ function render(list) {
       <td>${s.reviews.toLocaleString()}</td>
       <td>${s.distanceMiles == null ? '-' : `${s.distanceMiles.toFixed(1)} mi`}</td>
       <td><span class="badge">${s.score.toFixed(2)}</span></td>
+      <td>${linksHtml}</td>
     `;
     rowsEl.appendChild(tr);
 
+    const popupLinks = `${websiteHtml ? `${websiteHtml}<br/>` : ''}<a href="${directionsLink(s)}" target="_blank" rel="noopener noreferrer">Get directions</a>`;
     const marker = L.marker([s.lat, s.lon])
       .addTo(map)
-      .bindPopup(`<strong>${s.name}</strong><br/>${s.town}<br/>⭐ ${s.rating} (${s.reviews.toLocaleString()} reviews)`);
+      .bindPopup(`<strong>${s.name}</strong><br/>${s.town}<br/>⭐ ${s.rating} (${s.reviews.toLocaleString()} reviews)<br/>${popupLinks}`);
     spotMarkers.push(marker);
   });
 }
@@ -95,12 +114,26 @@ function computeView() {
       ranked.sort((a, b) => b.score - a.score);
   }
 
+  ranked = ranked.slice(0, 20);
   render(ranked);
 
   if (ranked.length > 0) {
     const group = L.featureGroup(spotMarkers.concat(userMarker ? [userMarker] : []));
     map.fitBounds(group.getBounds().pad(0.2));
+  } else if (!userLoc) {
+    map.setView(defaultCenter, defaultZoom);
   }
+}
+
+function resetToTop20() {
+  userLoc = null;
+  postcodeInput.value = '';
+  if (userMarker) {
+    userMarker.remove();
+    userMarker = undefined;
+  }
+  statusEl.textContent = 'Showing UK top 20.';
+  computeView();
 }
 
 form.addEventListener('submit', async (e) => {
@@ -114,14 +147,15 @@ form.addEventListener('submit', async (e) => {
     userLoc = await geocodePostcode(postcode);
     if (userMarker) userMarker.remove();
     userMarker = L.marker([userLoc.lat, userLoc.lon]).addTo(map).bindPopup('Your postcode').openPopup();
-    statusEl.textContent = `Showing results near ${postcode.toUpperCase()}.`;
+    statusEl.textContent = `Showing top cream teas near ${postcode.toUpperCase()}.`;
     computeView();
   } catch {
     statusEl.textContent = `Could not find postcode: ${postcode.toUpperCase()}`;
   }
 });
 
+resetBtn.addEventListener('click', resetToTop20);
 radiusEl.addEventListener('input', computeView);
 sortEl.addEventListener('change', computeView);
 
-computeView();
+resetToTop20();
